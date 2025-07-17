@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import { Evento } from "../Interfaces/IEventos";
 import { initialStateEvento } from "../constantes/InitialStates";
 import FormularioEventoActualizar from "../Componentes/FormularioEventoActualizar";
+import { obtenerEventosFB } from "../FireBase/Promesas";
 
 
 interface Props{
@@ -11,20 +12,17 @@ interface Props{
 }
 
 export const MostrarEventos = (props:Props)=>{
-    const miAlmacenamineto = window.localStorage
     const [eventoE, setEventoE] = useState(initialStateEvento)
     const [indexEvento, setindexEvento] = useState(Number)
     const [editarFormulario, setEditarFormulario] = useState(false)
 
     useEffect(()=>{
-        const listadoSTREventos = miAlmacenamineto.getItem("eventos")
-        if(listadoSTREventos != null){
-            let listado = JSON.parse(listadoSTREventos)
-            props.setEventos(listado)
-    }
-
-        
-
+        obtenerEventosFB().then((listadoE) => {
+            props.setEventos(listadoE)
+        }).catch((errores) => {
+            alert("Eventos no cargan")
+            console.log(errores)
+        })
     },[])
 
     const queModificar = (evento:Evento,index:number)=>{
@@ -36,7 +34,6 @@ export const MostrarEventos = (props:Props)=>{
         const nuevoslistadoEventos = [...props.eventos]
         nuevoslistadoEventos.splice(index,1)
         props.setEventos(nuevoslistadoEventos)
-        miAlmacenamineto.setItem("eventos",JSON.stringify(nuevoslistadoEventos))
     }
 
     return(
