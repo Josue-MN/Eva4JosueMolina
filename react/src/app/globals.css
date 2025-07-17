@@ -1,0 +1,104 @@
+.Encabezado{
+  background-color: #649eff;
+  color:white;
+  font-family: serif;
+  border: black;
+}
+
+.TituloEncabezado{
+  text-align: center;
+}
+
+.AlineacionEncabezado{
+  display:inline-flex;
+  justify-content:space-around;
+  list-style-type: none;
+}
+
+header.Encabezado {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-radius: 25px;
+}
+
+.BotonesEncabezado{
+  border-radius: 25px;
+  background-color: white;
+  cursor: pointer;
+  padding: 6px;
+  font-weight: bold;
+}
+
+.FondoFormulario{
+  background-image: url(../app/img/fondos-de-pizarra.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 23px;
+}
+
+.FondoFormularioEvento{
+  background-image: url(../app/img/fondos-de-pizarra.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 23px;
+}
+
+#MostrarEventos{
+  text-align: center;
+  display:table-header-group;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+}
+
+span{
+  color: red;
+  border:#649eff;
+  background-color: black;
+  border-radius: 10px;
+}
+body{
+  background-color:honeydew;
+  font-family: serif;
+  color:white
+}
+
+.ManejoDeDispocicion{
+  padding-top: 1rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+label{
+  text-align: left;
+  font-weight: bold;
+}
+
+input, select, textarea{
+  border-radius: 17px;
+  font-weight: bold;
+  width: 35ch;
+}
+
+.Descripcion{
+  width: 35ch;
+  height: 5em;
+}
+
+table, th, td {
+  border: 2px solid black;
+  border-collapse: collapse;
+  background-color: rgba(13, 184, 138, 0.3);
+  padding: 6px;
+  border-radius: 6px;
+}
