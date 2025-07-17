@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import { Evento } from "../Interfaces/IEventos";
 import { initialStateEvento } from "../constantes/InitialStates";
 
+import { registrarEventosFB, obtenerEventosFB } from "../FireBase/Promesas";
+
 interface Props{
     eventos:Evento[];
     setEventos:React.Dispatch<React.SetStateAction<Evento[]>>
@@ -20,11 +22,12 @@ export const FormularioEvento = ({eventos,setEventos}:Props) =>{
     const [errorRegistrar, setErrorRegistrar] = useState("")
 
     useEffect(()=>{
-        let listadoSTREventos = miAlmacenamineto.getItem("eventos")
-        if(listadoSTREventos != null){
-            let listado = JSON.parse(listadoSTREventos)
-            setEventos(listado)
-        }
+        obtenerEventosFB().then((listadoE) => {
+            setEventos(listadoE)
+        }).catch((errores) => {
+            alert("No se puede registrar el evento")
+            console.log(errores)
+        })
     },[])
 
     
@@ -177,6 +180,13 @@ export const FormularioEvento = ({eventos,setEventos}:Props) =>{
             const nuevoEvento = [...eventos, evento]
             setEventos(nuevoEvento)
             miAlmacenamineto.setItem("eventos", JSON.stringify(nuevoEvento))
+
+            registrarEventosFB(evento).then(()=>{
+                alert("Evento Registrado")
+            }).catch((errores)=>{
+                alert("No se pudo registrar")
+                console.log(errores)
+            })
             setEvento(initialStateEvento)
             setNombreC(0),setNumeroC(0),setTipoC(0),setDescripcionC(0),setFechaIC(0),setFechaTC(0),setDuracionC(0)
             setErrorRegistrar("")
