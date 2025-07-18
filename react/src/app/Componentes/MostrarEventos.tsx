@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import { Evento } from "../Interfaces/IEventos";
 import { initialStateEvento } from "../constantes/InitialStates";
 import FormularioEventoActualizar from "../Componentes/FormularioEventoActualizar";
-import { obtenerEventosFB } from "../FireBase/Promesas";
+import { obtenerEventosFB, actualizarEventoFB } from "../FireBase/Promesas";
 
 
 interface Props{
@@ -25,12 +25,12 @@ export const MostrarEventos = (props:Props)=>{
         })
     },[])
 
-    const queModificar = (evento:Evento,index:number)=>{
-        setEventoE(evento);
-        setindexEvento(index);
+    const queModificar = (evento:Evento)=>{
+            setEventoE(evento);
+            setEditarFormulario(true);
     }
 
-    const queEliminar = (index:number)=>{
+    const queEliminar = (index:string)=>{
         const nuevoslistadoEventos = [...props.eventos]
         nuevoslistadoEventos.splice(index,1)
         props.setEventos(nuevoslistadoEventos)
@@ -69,7 +69,7 @@ export const MostrarEventos = (props:Props)=>{
                                 <button
                                 className="BotonesEncabezado"
                                 onClick={()=>{if(confirm("¿Estas seguro que deseas modificar este evento?")){
-                                    queModificar(e,index)
+                                    queModificar(e)
                                     setEditarFormulario(true)
                                     }
                                 }}
@@ -77,7 +77,7 @@ export const MostrarEventos = (props:Props)=>{
                                 <button
                                 className="BotonesEncabezado"
                                 onClick={()=>{if(confirm("¿Estas seguro que deseas eliminar este evento?")){
-                                    queEliminar(index)
+                                    queEliminar(e.idEvento)
                                     }
                                 }}
                                 >Eliminar</button>

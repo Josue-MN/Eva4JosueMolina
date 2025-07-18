@@ -177,19 +177,19 @@ export const FormularioEvento = ({eventos,setEventos}:Props) =>{
     const handleRegistrar = ()=>{
         if(nombreC == 1 && numeroC == 1 && tipoC == 1 && descripcionC == 1 && fechaIC == 1 && fechaTC == 1 && duracionC == 1){
         //if(true){
-            const nuevoEvento = [...eventos, evento]
-            setEventos(nuevoEvento)
-            miAlmacenamineto.setItem("eventos", JSON.stringify(nuevoEvento))
-
-            registrarEventosFB(evento).then(()=>{
+            registrarEventosFB(evento).then((id)=>{
+                const eventoConID: Evento = {...evento,idEvento: id}
+                
                 alert("Evento Registrado")
+            
+                setEvento(initialStateEvento)
+                setNombreC(0),setNumeroC(0),setTipoC(0),setDescripcionC(0),setFechaIC(0),setFechaTC(0),setDuracionC(0)
+                setErrorRegistrar("")
             }).catch((errores)=>{
                 alert("No se pudo registrar")
                 console.log(errores)
             })
-            setEvento(initialStateEvento)
-            setNombreC(0),setNumeroC(0),setTipoC(0),setDescripcionC(0),setFechaIC(0),setFechaTC(0),setDuracionC(0)
-            setErrorRegistrar("")
+            
         }
         else{
             setErrorRegistrar("Asegurese de completar todos los campos.")

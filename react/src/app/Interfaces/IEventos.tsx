@@ -1,4 +1,5 @@
 export interface Evento{
+    idEvento:string,
     nombreEvento:string,
     numeroEvento:number,
     tipoEvento:string,

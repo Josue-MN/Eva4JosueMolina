@@ -1,11 +1,20 @@
-import {collection, addDoc, getDocs} from "firebase/firestore"
+import {collection, addDoc, getDocs, getDoc, doc, updateDoc, deleteDoc, documentId} from "firebase/firestore"
 import { db } from "./Conexion"
 import { Evento } from "../Interfaces/IEventos"
 
 export const registrarEventosFB = async(e:Evento) => {
     // Add a new document with a generated id.
-    const docRef = await addDoc(collection(db,"Eventos"),e);
-    console.log("Document written with ID: ", docRef.id)
+    const docRef = await addDoc(collection(db,"Eventos"),{
+        nombreEvento: e.nombreEvento,
+        numeroEvento: e.numeroEvento,
+        tipoEvento: e.tipoEvento,
+        descripcionEvento: e.descripcionEvento,
+        fechaIEvento: e.fechaIEvento,
+        fechaTEvento: e.fechaTEvento,
+        duracionEvento: e.duracionEvento
+    });
+    //console.log("Document written with ID: ", docRef.id)
+    return docRef.id
 
 }
 
@@ -14,7 +23,8 @@ export const obtenerEventosFB = async() => {
     const consulta = await getDocs(collection(db,"Eventos"));
     consulta.forEach((doc)=>{
         // doc.data() is never undefined for query doc snapshots
-        let Evento:Evento = {
+        const evento:Evento = {
+            idEvento: doc.id,
             nombreEvento: doc.data().nombreEvento,
             numeroEvento: doc.data().numeroEvento,
             tipoEvento: doc.data().tipoEvento,
@@ -23,8 +33,33 @@ export const obtenerEventosFB = async() => {
             fechaTEvento: doc.data().fechaTEvento,
             duracionEvento: doc.data().duracionEvento
         }
-        listadoE.push(Evento)
-        console.log(doc.id, " => ", doc.data())
+        listadoE.push(evento)
+        //console.log(doc.id, " => ", doc.data())
     })
     return listadoE
+}
+
+export const obtenerID = async() =>{
+
+}
+
+export const actualizarEventoFB = async(e:Evento,idEvento:string) => {
+    const eventoDoc = doc(db, "Eventos", idEvento);
+    const consulta = await getDoc(eventoDoc);
+    if(consulta.exists()){
+        updateDoc(eventoDoc, {
+        nombreEvento: e.nombreEvento,
+        numeroEvento: e.numeroEvento,
+        tipoEvento: e.tipoEvento,
+        descripcionEvento: e.descripcionEvento,
+        fechaIEvento: e.fechaIEvento,
+        fechaTEvento: e.fechaTEvento,
+        duracionEvento: e.duracionEvento
+        })
+        //console.log("HOLAA: "+idEvento)
+    }
+    else{
+        //console.log("CHAOO "+idEvento)
+    } 
+    
 }

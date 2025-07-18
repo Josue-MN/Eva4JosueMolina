@@ -1,18 +1,18 @@
 import React, {useEffect, useState} from "react";
 import { Evento } from "../Interfaces/IEventos";
 import { initialStateEvento } from "../constantes/InitialStates";
+import { obtenerEventosFB,actualizarEventoFB } from "../FireBase/Promesas";
 
 
 interface Props{
     eventos:Evento[];
     setEventos:React.Dispatch<React.SetStateAction<Evento[]>>;
     eventoE:Evento;
-    indexEvento:number;
+    indexEvento:string;
     cerrarFormulario: () => void;
 }
 
 export const FormularioEventoActualizar = ({eventos, setEventos, eventoE,indexEvento,cerrarFormulario}:Props) =>{
-    const miAlmacenamineto = window.localStorage
     const [evento, setEvento] = useState(initialStateEvento)
     const [eNombreE, setENombreE] = useState("")
     const [eNumeroE, setENumeroE] = useState("")
@@ -35,12 +35,7 @@ export const FormularioEventoActualizar = ({eventos, setEventos, eventoE,indexEv
 
 
     useEffect(() => {
-        const listadoSTREventos = miAlmacenamineto.getItem("eventos");
         setEvento(eventoE)
-        if (listadoSTREventos != null) {
-            const listado = JSON.parse(listadoSTREventos);
-            setEventos(listado);
-        }
     },[eventoE]);
 
 
@@ -180,21 +175,16 @@ export const FormularioEventoActualizar = ({eventos, setEventos, eventoE,indexEv
         }
     }
 
-    const handleActualizar = (indexUsado:number,EventoActualizado:Evento)=>{
+    const handleActualizar = async(EventoActualizado:Evento)=>{
         if(nombreC == 1 && numeroC == 1 && tipoC == 1 && descripcionC == 1 && fechaIC == 1 && fechaTC == 1 && duracionC == 1){
-        //if(true){
-            const eventoActualizado = [...eventos]
-            eventoActualizado[indexUsado] = EventoActualizado
-            setEventos(eventoActualizado)
-            miAlmacenamineto.setItem("eventos",JSON.stringify(eventoActualizado))
+            actualizarEventoFB(EventoActualizado, EventoActualizado.idEvento)
             setNombreC(0),setNumeroC(0),setTipoC(0),setDescripcionC(0),setFechaIC(0),setFechaTC(0),setDuracionC(0)
             setErrorActualizar("")
             cerrarFormulario()
-        }
+        } 
         else{
             setErrorActualizar("Asegurese de completar todos los campos.")
         }
-        
         
     }
 
@@ -297,7 +287,7 @@ export const FormularioEventoActualizar = ({eventos, setEventos, eventoE,indexEv
         disabled={ comprobanteDeEventoSinCambios || !todoValidadoBoton }
         onClick={() => {
             if(confirm("¿Estas seguro que deseas Actualizar?")){
-                handleActualizar(indexEvento,evento)
+                handleActualizar(evento)
             }
         }}
         >Actualizar</button>
