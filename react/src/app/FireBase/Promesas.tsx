@@ -39,10 +39,6 @@ export const obtenerEventosFB = async() => {
     return listadoE
 }
 
-export const obtenerID = async() =>{
-
-}
-
 export const actualizarEventoFB = async(e:Evento,idEvento:string) => {
     const eventoDoc = doc(db, "Eventos", idEvento);
     const consulta = await getDoc(eventoDoc);
@@ -56,10 +52,24 @@ export const actualizarEventoFB = async(e:Evento,idEvento:string) => {
         fechaTEvento: e.fechaTEvento,
         duracionEvento: e.duracionEvento
         })
+        alert("Evento Actualizado con exito")
         //console.log("HOLAA: "+idEvento)
     }
     else{
+        alert("Error, el evento ya existe o fue eliminado.")
         //console.log("CHAOO "+idEvento)
     } 
     
+}
+
+export const eliminarEventosFB = async(idEvento:string) => {
+    const eventoDoc = doc(db,"Eventos",idEvento)
+    const consulta = await getDoc(eventoDoc);
+    if(consulta.exists()){
+        await deleteDoc(eventoDoc)
+        alert("Evento Eliminado con exito")
+    }
+    else{
+        alert("Error, el evento ya existe o fue eliminado.")
+    }
 }

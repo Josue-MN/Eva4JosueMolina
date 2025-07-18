@@ -5,11 +5,10 @@ import { initialStateEvento } from "../constantes/InitialStates";
 import { registrarEventosFB, obtenerEventosFB } from "../FireBase/Promesas";
 
 interface Props{
-    eventos:Evento[];
     setEventos:React.Dispatch<React.SetStateAction<Evento[]>>
 }
 
-export const FormularioEvento = ({eventos,setEventos}:Props) =>{
+export const FormularioEvento = ({setEventos}:Props) =>{
     const miAlmacenamineto = window.localStorage
     const [evento, setEvento] = useState(initialStateEvento)
     const [eNombreE, setENombreE] = useState("")

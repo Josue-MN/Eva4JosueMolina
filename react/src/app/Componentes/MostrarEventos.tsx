@@ -2,18 +2,16 @@ import React, {useState, useEffect} from "react";
 import { Evento } from "../Interfaces/IEventos";
 import { initialStateEvento } from "../constantes/InitialStates";
 import FormularioEventoActualizar from "../Componentes/FormularioEventoActualizar";
-import { obtenerEventosFB, actualizarEventoFB } from "../FireBase/Promesas";
+import { obtenerEventosFB, eliminarEventosFB } from "../FireBase/Promesas";
 
 
 interface Props{
-    traerEventos:(e:Evento,index:number) => void;
     eventos:Evento[];
     setEventos:React.Dispatch<React.SetStateAction<Evento[]>>
 }
 
 export const MostrarEventos = (props:Props)=>{
     const [eventoE, setEventoE] = useState(initialStateEvento)
-    const [indexEvento, setindexEvento] = useState(Number)
     const [editarFormulario, setEditarFormulario] = useState(false)
 
     useEffect(()=>{
@@ -26,14 +24,13 @@ export const MostrarEventos = (props:Props)=>{
     },[])
 
     const queModificar = (evento:Evento)=>{
-            setEventoE(evento);
-            setEditarFormulario(true);
+        setEventoE(evento);
+        setEditarFormulario(true);
     }
 
-    const queEliminar = (index:string)=>{
-        const nuevoslistadoEventos = [...props.eventos]
-        nuevoslistadoEventos.splice(index,1)
-        props.setEventos(nuevoslistadoEventos)
+    const queEliminar = (idEvento:string)=>{
+        eliminarEventosFB(idEvento)
+        obtenerEventosFB().then(props.setEventos);
     }
 
     return(
@@ -88,7 +85,7 @@ export const MostrarEventos = (props:Props)=>{
             </tbody>
         </table>
             <div>
-            {editarFormulario && <FormularioEventoActualizar eventos={props.eventos} setEventos={props.setEventos} eventoE={eventoE} indexEvento={indexEvento} cerrarFormulario={() => setEditarFormulario(false)}/>}
+            {editarFormulario && <FormularioEventoActualizar eventos={props.eventos} setEventos={props.setEventos} eventoE={eventoE} cerrarFormulario={() => setEditarFormulario(false)}/>}
             </div>
         </div>
         </>

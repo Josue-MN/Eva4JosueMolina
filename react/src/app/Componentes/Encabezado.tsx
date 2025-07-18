@@ -66,8 +66,8 @@ export const Encabezado = () =>{
         </nav>
         </header>
         <div className="ManejoDeDispocicion">
-            {ingresarFormulario && <FormularioEvento eventos={eventos} setEventos={setEventos}/>}
-            {mostrarFormulario && <MostrarEventos eventos={eventos} setEventos={setEventos} traerEventos={traerEventos}/>}
+            {ingresarFormulario && <FormularioEvento setEventos={setEventos}/>}
+            {mostrarFormulario && <MostrarEventos eventos={eventos} setEventos={setEventos}/>}
             {mostrarHome && <Home/>}
             {mostrarHome1 && <Home/>}
         </div>

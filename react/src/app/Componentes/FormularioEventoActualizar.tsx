@@ -8,11 +8,10 @@ interface Props{
     eventos:Evento[];
     setEventos:React.Dispatch<React.SetStateAction<Evento[]>>;
     eventoE:Evento;
-    indexEvento:string;
     cerrarFormulario: () => void;
 }
 
-export const FormularioEventoActualizar = ({eventos, setEventos, eventoE,indexEvento,cerrarFormulario}:Props) =>{
+export const FormularioEventoActualizar = ({eventos, setEventos, eventoE,cerrarFormulario}:Props) =>{
     const [evento, setEvento] = useState(initialStateEvento)
     const [eNombreE, setENombreE] = useState("")
     const [eNumeroE, setENumeroE] = useState("")
@@ -36,7 +35,7 @@ export const FormularioEventoActualizar = ({eventos, setEventos, eventoE,indexEv
 
     useEffect(() => {
         setEvento(eventoE)
-    },[eventoE]);
+    },[]);
 
 
     const handleEvento = (name:string,value:string) =>{
@@ -175,12 +174,13 @@ export const FormularioEventoActualizar = ({eventos, setEventos, eventoE,indexEv
         }
     }
 
-    const handleActualizar = async(EventoActualizado:Evento)=>{
+    const handleActualizar = (EventoActualizado:Evento)=>{
         if(nombreC == 1 && numeroC == 1 && tipoC == 1 && descripcionC == 1 && fechaIC == 1 && fechaTC == 1 && duracionC == 1){
             actualizarEventoFB(EventoActualizado, EventoActualizado.idEvento)
             setNombreC(0),setNumeroC(0),setTipoC(0),setDescripcionC(0),setFechaIC(0),setFechaTC(0),setDuracionC(0)
             setErrorActualizar("")
             cerrarFormulario()
+            obtenerEventosFB().then(setEventos);
         } 
         else{
             setErrorActualizar("Asegurese de completar todos los campos.")
