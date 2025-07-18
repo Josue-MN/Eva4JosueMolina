@@ -176,11 +176,17 @@ export const FormularioEventoActualizar = ({eventos, setEventos, eventoE,cerrarF
 
     const handleActualizar = (EventoActualizado:Evento)=>{
         if(nombreC == 1 && numeroC == 1 && tipoC == 1 && descripcionC == 1 && fechaIC == 1 && fechaTC == 1 && duracionC == 1){
-            actualizarEventoFB(EventoActualizado, EventoActualizado.idEvento)
+            actualizarEventoFB(EventoActualizado, EventoActualizado.idEvento).then((resultado) =>{
+                if (resultado === 1){
+                    obtenerEventosFB().then(setEventos);
+                }
+                else{
+                    obtenerEventosFB().then(setEventos);
+                }
+            })
             setNombreC(0),setNumeroC(0),setTipoC(0),setDescripcionC(0),setFechaIC(0),setFechaTC(0),setDuracionC(0)
             setErrorActualizar("")
             cerrarFormulario()
-            obtenerEventosFB().then(setEventos);
         } 
         else{
             setErrorActualizar("Asegurese de completar todos los campos.")

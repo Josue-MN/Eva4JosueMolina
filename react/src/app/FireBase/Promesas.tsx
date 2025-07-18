@@ -1,4 +1,4 @@
-import {collection, addDoc, getDocs, getDoc, doc, updateDoc, deleteDoc, documentId} from "firebase/firestore"
+import {collection, addDoc, getDocs, getDoc, doc, updateDoc, deleteDoc} from "firebase/firestore"
 import { db } from "./Conexion"
 import { Evento } from "../Interfaces/IEventos"
 
@@ -43,7 +43,7 @@ export const actualizarEventoFB = async(e:Evento,idEvento:string) => {
     const eventoDoc = doc(db, "Eventos", idEvento);
     const consulta = await getDoc(eventoDoc);
     if(consulta.exists()){
-        updateDoc(eventoDoc, {
+        await updateDoc(eventoDoc, {
         nombreEvento: e.nombreEvento,
         numeroEvento: e.numeroEvento,
         tipoEvento: e.tipoEvento,
@@ -53,10 +53,12 @@ export const actualizarEventoFB = async(e:Evento,idEvento:string) => {
         duracionEvento: e.duracionEvento
         })
         alert("Evento Actualizado con exito")
+        return 1
         //console.log("HOLAA: "+idEvento)
     }
     else{
         alert("Error, el evento ya existe o fue eliminado.")
+        return 0
         //console.log("CHAOO "+idEvento)
     } 
     
@@ -68,8 +70,10 @@ export const eliminarEventosFB = async(idEvento:string) => {
     if(consulta.exists()){
         await deleteDoc(eventoDoc)
         alert("Evento Eliminado con exito")
+        return 1
     }
     else{
         alert("Error, el evento ya existe o fue eliminado.")
+        return 0
     }
 }

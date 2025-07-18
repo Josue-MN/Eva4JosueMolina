@@ -1,14 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, { useState } from "react";
 import { Evento } from "../Interfaces/IEventos";
 import { initialStateEvento } from "../constantes/InitialStates";
 
 import { registrarEventosFB } from "../FireBase/Promesas";
 
-interface Props{
-    setEventos:React.Dispatch<React.SetStateAction<Evento[]>>
-}
 
-export const FormularioEvento = ({setEventos}:Props) =>{
+export const FormularioEvento = () =>{
     const [evento, setEvento] = useState(initialStateEvento)
     const [eNombreE, setENombreE] = useState("")
     const [eNumeroE, setENumeroE] = useState("")

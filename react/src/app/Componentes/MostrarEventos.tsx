@@ -28,8 +28,16 @@ export const MostrarEventos = (props:Props)=>{
     }
 
     const queEliminar = (idEvento:string)=>{
-        eliminarEventosFB(idEvento)
-        obtenerEventosFB().then(props.setEventos);
+        eliminarEventosFB(idEvento).then((resultado) => {
+            if (resultado === 1){
+                obtenerEventosFB().then(props.setEventos);
+            }
+            else{
+                obtenerEventosFB().then(props.setEventos);
+            }
+        })
+        
+        
     }
 
     return(

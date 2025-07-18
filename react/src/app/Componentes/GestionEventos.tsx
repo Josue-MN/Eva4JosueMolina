@@ -13,7 +13,7 @@ const GestionEventos = ()=>{
 
     return(
         <>
-        <FormularioEvento setEventos={setEventos}/>
+        <FormularioEvento/>
         <MostrarEventos eventos={eventos} setEventos={setEventos}/>
         <FormularioEventoActualizar eventos={eventos} setEventos={setEventos} eventoE={eventoE} cerrarFormulario={() => setEditarFormulario(false)}/>
         </>
