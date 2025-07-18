@@ -2,14 +2,13 @@ import React, {useEffect, useState} from "react";
 import { Evento } from "../Interfaces/IEventos";
 import { initialStateEvento } from "../constantes/InitialStates";
 
-import { registrarEventosFB, obtenerEventosFB } from "../FireBase/Promesas";
+import { registrarEventosFB } from "../FireBase/Promesas";
 
 interface Props{
     setEventos:React.Dispatch<React.SetStateAction<Evento[]>>
 }
 
 export const FormularioEvento = ({setEventos}:Props) =>{
-    const miAlmacenamineto = window.localStorage
     const [evento, setEvento] = useState(initialStateEvento)
     const [eNombreE, setENombreE] = useState("")
     const [eNumeroE, setENumeroE] = useState("")
@@ -19,15 +18,6 @@ export const FormularioEvento = ({setEventos}:Props) =>{
     const [eFechaTerminoE, setEFechaTerminoE] = useState("")
     const [eDuracionE, setEDuracionE] = useState("")
     const [errorRegistrar, setErrorRegistrar] = useState("")
-
-    useEffect(()=>{
-        obtenerEventosFB().then((listadoE) => {
-            setEventos(listadoE)
-        }).catch((errores) => {
-            alert("No se puede registrar el evento")
-            console.log(errores)
-        })
-    },[])
 
     
     const [nombreC, setNombreC] = useState(0)
@@ -103,14 +93,14 @@ export const FormularioEvento = ({setEventos}:Props) =>{
             setEDescripcionE("")
             if(SoloLetrasConEspacioYNumeros.test(NuevoEvento.descripcionEvento) == false){
                 setEDescripcionE("La descripcion no puede llevar caracteres especiales")
-            setDescripcionC(0)
+                setDescripcionC(0)
             }
             else if(SoloLetrasConEspacioYNumeros.test(NuevoEvento.descripcionEvento) == true){
-                setENombreE("")
-            setDescripcionC(1)
+                setEDescripcionE("")
+                setDescripcionC(1)
             }
             else{
-                setENumeroE(CCEA)
+                setEDescripcionE(CCEA)
             }
         }
         //Fecha Inicial Evento y Final

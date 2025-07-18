@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from "react"
+import React, {useState} from "react"
 import FormularioEvento from "./FormularioEvento"
 import MostrarEventos from "./MostrarEventos"
 import Home from "./Home";
@@ -7,7 +7,6 @@ import { Evento } from "../Interfaces/IEventos";
 import { initialStateEvento } from "../constantes/InitialStates";
 
 export const Encabezado = () =>{ 
-    const miAlmacenamineto = window.localStorage
     const [ingresarFormulario, setIngresarFormulario] = useState(false)
     const [mostrarFormulario, setMostrarFormulario] = useState(false)
     const [mostrarHome, setMostrarHome] = useState(false)
@@ -15,12 +14,6 @@ export const Encabezado = () =>{
     
     const [eventos, setEventos] = useState<Evento[]>([])
     const [eventoE, setEventoE] = useState(initialStateEvento)
-    const [indexEvento, setindexEvento] = useState(Number)
-    
-    const traerEventos = (e:Evento,index:number)=>{
-        setEventoE(e)
-        setindexEvento(index)
-    }
     
 
 

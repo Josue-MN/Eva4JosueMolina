@@ -25,7 +25,6 @@ export const MostrarEventos = (props:Props)=>{
 
     const queModificar = (evento:Evento)=>{
         setEventoE(evento);
-        setEditarFormulario(true);
     }
 
     const queEliminar = (idEvento:string)=>{

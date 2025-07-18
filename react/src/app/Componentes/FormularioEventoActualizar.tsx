@@ -35,7 +35,7 @@ export const FormularioEventoActualizar = ({eventos, setEventos, eventoE,cerrarF
 
     useEffect(() => {
         setEvento(eventoE)
-    },[]);
+    },[eventoE]);
 
 
     const handleEvento = (name:string,value:string) =>{
@@ -111,7 +111,7 @@ export const FormularioEventoActualizar = ({eventos, setEventos, eventoE,cerrarF
                 setDescripcionC(1)
             }
             else{
-                setENumeroE(CCEA)
+                setEDescripcionE(CCEA)
             }
         }
         //Fecha Inicial Evento y Final
